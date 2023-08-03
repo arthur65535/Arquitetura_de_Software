@@ -1,0 +1,49 @@
+Functional requirements:
+
+1. Data Collection:
+
+a. Support for Various Sources: The system should be able to collect data from diverse sources, including CSV files, Excel files, and relational databases, that contain information about support services via text chatbots.
+
+b. Data Extraction and Ingestion: The system should provide mechanisms to efficiently extract and ingest data from these sources into the central repository.
+
+c. Data Schema Inference: The system should have the ability to automatically infer the data schema from the collected data, or provide mechanisms to define and map the schema during the data ingestion process.
+
+d. Semântica dos dados: O sistema deve fornecer a possibilidade do usuário adicionar significado a um dado, por exemplo, proveniente de uma coluna de uma planilha do Excel. O usuário pode criar um novo significado ou escolher dentre uma lista pré-definida de significados, tais como:
+
+- Tempo de atendimento com chatbot: tempo contado do início do atendimento com o chatbot até o encaminhamento do cliente para a fila de atendimento.
+- Tempo de espera na fila de atendimento.
+- Tempo de atendimento com atendente humano até a resolução.
+- Satisfação do cliente medida por uma métrica quantitativa, como um número um número de 1 a 10.
+- Taxa de abandono: porcentagem de atendimentos que são abandonados pelos clientes. 
+
+
+2. Data processing
+
+a. Data Cleaning and Standardization: The system should perform data cleaning operations to handle inconsistencies, missing values, and anomalies within the collected data. It should standardize data formats and ensure data quality before storing it in the central repository.
+
+b. Data Enrichment: The system should allow for enriching the collected data by integrating it with additional relevant information, such as customer profiles or metadata, to provide more context for data analytics.
+
+
+3. Data Validation and Quality Assurance:
+
+a. Data Integrity Checks: The system should perform validation checks on the collected data to ensure its integrity, consistency, and compliance with predefined rules and constraints.
+
+b. Data Quality Monitoring: The system should provide mechanisms to continuously monitor the quality of the collected data, detect anomalies, and generate alerts or notifications when data quality issues arise.
+
+
+4. Centralized Data Storage and Management:
+
+a. Data Warehouse-like Repository: The system should create and maintain a centralized data warehouse-like repository, optimized for data analytics via SQL, to store and manage the collected data.
+
+b. Data Indexing and Retrieval: The system should support efficient indexing and retrieval mechanisms to enable fast and targeted querying of the data in the central repository.
+
+c. Data Partitioning and Archiving: The system should provide mechanisms to partition and archive data based on predefined criteria (e.g., time-based partitions) to optimize storage and retrieval performance.
+
+
+5. Data Analytics Support:
+
+a. SQL Querying and Analysis: The system should provide SQL-based querying capabilities to allow users to perform ad-hoc data analysis on the centralized data repository.
+
+b. Aggregation and Statistical Analysis: The system should support aggregation operations (e.g., sum, average, count) and provide statistical analysis functionalities to derive insights from the collected data.
+
+

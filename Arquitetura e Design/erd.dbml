@@ -1,0 +1,154 @@
+Table companies {
+  company_id integer [primary key]
+  name varchar [not null]
+  status char [not null]
+  phone varchar [not null]
+}
+
+Table departments {
+  department_id integer [primary key, increment]
+  name varchar [not null]
+  description varchar
+  status integer
+}
+
+Table roles {
+  role_id integer [primary key]
+  name varchar [not null]
+  description varchar
+}
+
+Table users {
+  user_id integer [primary key]
+  company_id integer [not null]
+  name varchar [not null]
+  email varchar(320) [not null]
+  password varchar [not null]
+  available_service bool [not null, note: 'status de disponibilidade de atendimento']
+}
+
+Table contacts {
+  contact_id integer [primary key]
+  customer_id integer [not null]
+  category_id integer [not null]
+  subcat varchar
+  name varchar [not null]
+  picture varchar
+  phone varchar
+  email varchar(320)
+  cpf char(11)
+  address varchar
+  gender varchar
+  born date
+  created_at timestamp
+  updated_at timestamp
+}
+
+Table channels {
+  channel_id integer [primary key]
+  customer_id integer
+  phone varchar
+  url varchar
+  email varchar(320)
+  name varchar [not null]
+  phone_place integer
+  type varchar
+  display_on_web_chat bool
+  server_id integer
+  history varchar
+  last_checked_lost_message varchar
+  revsync integer
+  api integer
+  connection integer
+  config varchar
+  notificated integer
+  created_at timestamp
+  updated_at timestamp
+  deleted_at timestamp
+  deleted_by timestamp
+}
+
+Table chats {
+  chat_id integer [primary key]
+  channel_id integer [not null]
+  user_id integer
+  portfolio_user_id integer
+  customer_id integer
+  category_id integer
+  subcat varchar
+  name varchar
+  picture varchar
+  phone varchar
+  email varchar(320)
+  cpf char(11)
+  address varchar
+  gender varchar
+  type varchar
+  chat_read bool [not null]
+  status integer
+  origin varchar
+  count_messages integer [not null]
+  data varchar
+  timestamp timestamp
+  created_at timestamp
+  updated_at timestamp  
+}
+
+Table messages {
+  message_uid varchar [primary key]
+  chat_id integer [not null]
+  channel_id integer [not null]
+  user_id integer [not null]
+  contact_id integer
+  contact_uid varchar
+  contact_name varchar
+  message_body varchar
+  message_body_url varchar
+  message_body_thumb varchar
+  message_body_caption varchar
+  message_body_mimetype varchar
+  message_body_contact varchar
+  message_body_vcard varchar
+  message_body_name varchar
+  message_body_lat varchar
+  message_body_lng varchar
+  message_dtm varchar
+  message_cuid varchar
+  message_dir char(1)
+  message_type varchar [not null]
+  event varchar
+  base64 varchar
+  created_at timestamp
+  updated_at timestamp  
+}
+
+Ref: chats.chat_id < messages.message_uid
+Ref: users.user_id < messages.message_uid
+Ref: contacts.contact_id < messages.message_uid
+
+Table user_role {
+  user_id integer [not null, ref: > users.user_id]
+  role_id integer [not null, ref: > roles.role_id]
+
+  Indexes {
+    (user_id, role_id) [unique]
+  }
+}
+
+Table user_department {
+  user_id integer [not null, ref: > users.user_id]
+  department_id integer [not null, ref: > departments.department_id]
+
+  Indexes {
+    (user_id, department_id) [unique]
+  }
+}
+
+Table user_channel {
+  user_id integer [not null, ref: > users.user_id]
+  channel_id integer [not null, ref: > channels.channel_id]
+
+  Indexes {
+    (user_id, channel_id) [unique]
+  }
+}

@@ -1,0 +1,136 @@
+openapi: "3.0.0"    
+info:
+  title: "BoltChat RESTful API"
+  version: "1"
+  description: "RESTful API to BoltChat for managing chat data"
+paths:
+  /datasets:
+    get:
+      description: "Retrieve all datasets metadata"
+      tags: 
+        - datasets
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Dataset"
+  /dataset-ingestions:
+    get:
+      description: "Retrieve all dataset ingestions"
+      tags: 
+        - dataset-ingestions
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/DatasetIngestion"
+    post:
+      description: |-
+        Insert a dataset ingestion and start running it
+      tags: 
+        - dataset-ingestions
+      requestBody: 
+        required: true
+        content:
+          application/json: 
+            schema:
+              $ref: "#/components/schemas/DatasetIngestion"
+      responses: 
+        204:
+          description: "OK"
+components:
+  schemas:
+    Dataset:
+      properties: 
+        id:
+          nullable: false
+          type: "integer"
+          readOnly: true
+        name:
+          nullable: false
+          type: "string"
+        dataFormat:
+          nullable: false
+          enum:
+            - POSTGRESQL_DUMP
+            - CSV
+            - PARQUET
+    DatasetIngestion:
+      properties:
+        id:
+          nullable: false
+          type: "integer"
+          readOnly: true
+        dataset_id:
+          nullable: true
+          type: "integer"
+        fail_mode:
+          nullable: false
+          type: "string"
+          enum: 
+            - DISCARD_INVALID_RECORS
+            - FAIL_FAST
+        status:
+          nullable: false
+          type: "string"
+          readOnly: true
+          enum:
+            - RUNNING
+            - CANCELED
+            - COMPLETED
+        number_of_rows_to_be_ingested:
+          nullable: false
+          type: "integer"
+          readOnly: true
+        number_of_rows_successfully_ingested:
+          nullable: false
+          type: "integer"
+          readOnly: true
+        start_datetime:
+          nullable: false
+          type: "string"
+          readOnly: true 
+          examples: 
+            - "2020-04-30T04:00:00.000Z"
+        end_datetime:
+          nullable: true
+          type: "string"
+          readOnly: true
+          examples:
+            - "2020-04-30T04:00:00.000Z"
+        stop_datetime:
+          nullable: true
+          type: "string"
+          readOnly: true
+          examples:
+            - "2020-04-30T04:00:00.000Z"
+    NamedQuery:
+      properties: 
+        id:
+          nullable: false
+          type: "integer"
+          readOnly: true
+        name:
+          nullable: false
+          type: "string"
+        description:
+          nullable: true
+          type: "string"
+        content:
+          nullable: false
+          type: "string"
+          examples: 
+            - SELECT COUNT(*) FROM messages
+            - SELECT COUNT(*) FROM messages INNER JOIN channels ON messages.channel_id = channels.channel_id GROUP BY channels.channel_id
+            - SELECT COUNT(*) FROM messages GROUP BY messages.channel_id
+

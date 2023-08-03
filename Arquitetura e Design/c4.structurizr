@@ -1,0 +1,127 @@
+workspace {
+    
+    //!identifiers hierarchical
+    
+    model {
+        user = person "Data Analyst" {
+            description "Um analista de dados da empresa que utiliza o serviço de chat bot"
+        }
+        BISystem = softwareSystem "BI System" {
+            description "Sistema de BI utilizado pelo analista de dados, como Tableau e PowerBI"
+            tags "BI System"
+        }
+        softwareSystem = softwareSystem "BoltChat Analytics" {
+            boltchat_analytics = group "BoltChat Analytics" {
+                frontend = container "Frontend" {
+                    technology "Javascript e React"
+                    tags "Frontend"
+                }
+                olap_db = container "Banco de Dados OLAP" {
+                    description "Ingere e armazena datasets"
+                    technology "ClickHouse"
+                    tags "olap_db"
+                }
+                restful_web_service = container "RESTful Web Service" {
+                    tags "restful_web_service"
+                    component controllers "REST Controllers" {
+                    }
+                    component routers "HTTP Routers" {
+                        frontend -> this "Mensagens HTTPS com dados em JSON"
+                    }
+                    component models "Modelos que representam as entidades de negócio" {
+                        
+                    }
+                    component queries "Representam as consultas realizadas no banco de dados de aplicação OLTP" {
+                        
+                    }
+                    component clickhouse_service "Módulo de serviço para o SGBD OLAP ClickHouse" {
+                        technology "clickhouse-go Golang driver for ClickHouse"
+                        this -> olap_db
+                    }
+                }
+                oltp_db = container "Banco de dados OLTP" {
+                    description "Armazena dados de autenticação e metadados da ingestões de datasets"
+                    technology "PostgreSQL"
+                    tags "oltp_db"
+                }
+                data_catalog = container "Catálogo de Dados" {
+                    description "Armazena metadados dos datasets ingeridos"
+                    technology "ClickHouse"
+                    tags "data_catalog"
+                }
+            }
+    
+            user -> frontend
+            BISystem -> olap_db "Coleta dados via conector específico"
+            restful_web_service -> oltp_db "Reads from and writes to"
+            restful_web_service -> data_catalog "Reads from and writes to"
+        }
+
+    }
+    
+    views {
+        container softwareSystem "Containers_All" "Containers" {
+            include *
+            autolayout
+        }
+
+        component restful_web_service "restful_web_service_containers" "RESTful Web Service Containers" {
+            include *
+            autolayout
+        }
+
+        styles {
+            element "Person" {
+                shape Person
+            }
+            element "Frontend" {
+                shape WebBrowser
+                background #8CD0F0
+            }
+            element "BI System" {
+                shape Box
+                background "#DD8BFE"
+            }
+            element "restful_web_service" {
+                shape hexagon
+                background #91F0AE
+            }
+            element "oltp_db" {
+                shape cylinder
+            }
+            element "data_catalog" {
+                shape cylinder
+            }
+            element "olap_db" {
+                shape cylinder
+            }
+            element "Service 1" {
+                background #91F0AE
+            }
+            /*element "Service 2" {
+                background #EDF08C
+            }
+            element "Service 3" {
+                background #8CD0F0
+            }
+            element "Service 4" {
+                background #F08CA4
+            }
+            element "Service 5" {
+                background #FFAC33
+            }
+            element "Service 6" {
+                background #DD8BFE
+            }
+            element "Service 7" {
+                background #89ACFF
+            }
+            element "Service 8" {
+                background #FDA9F4
+            }*/
+          
+        }
+
+    }
+
+}
