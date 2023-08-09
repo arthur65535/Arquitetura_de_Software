@@ -1,0 +1,26 @@
+Table dataset {
+  id integer [primary key]
+  name varchar [not null]
+  data_format varchar [not null]
+}
+
+Table dataset_ingestion {
+  id integer [primary key]
+  dataset_id integer
+  fail_mode enum [not null]
+  status enum [not null]
+  number_of_rouws_to_be_ingested integer [not null]
+  number_of_rouws_succesfully_ingested integer [not null]
+  start_datetime timestamp [not null]
+  end_datetime timestamp
+  stop_datetime timestamp
+}
+
+Table named_query {
+  id integer [primary key]
+  name varchar [not null]
+  description varchar
+  content varchar [not null]
+}
+
+Ref: dataset.id - dataset_ingestion.dataset_id
