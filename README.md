@@ -13,8 +13,6 @@ A arquitetura do sistema inclui a coleta de dados provenientes de múltiplas fon
 
 Com ênfase na precisão dos dados, performance eficiente, segurança robusta e usabilidade intuitiva, o BoltCHAT Analytics visa melhorar o atendimento ao cliente, eficiência operacional e tomada de decisões estratégicas. A arquitetura também enfoca a conformidade com regulamentações de proteção de dados e a escalabilidade para enfrentar futuras demandas.
 
-Este repositório contém a documentação detalhada da arquitetura, instruções de instalação, configuração e utilização, bem como contribuições da comunidade são bem-vindas para aprimorar continuamente essa solução essencial para análises em plataformas de atendimento omnichannel.
-
 # PMC (Project Model Canvas)
 
 ![BoltCHAT](https://github.com/arthur65535/Arquitetura_de_Software/assets/29666978/b09d29f0-1987-473a-9db7-7f4a2e6796e1)
